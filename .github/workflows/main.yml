@@ -17,7 +17,7 @@ jobs:
   Set-repos:
     name: "🐂 Parse repos.json"
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'cvnertnc' && github.repository == 'cvnertnc/Begonia-Kernel-Builder'
+
     outputs:
       repos: ${{ steps.generate-matrix.outputs.repos }}
       builddate: ${{ steps.generate-builddate.outputs.builddate }}
@@ -41,7 +41,6 @@ jobs:
   Build-Kernel:
     name: "🐎 Build kernel"
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'cvnertnc' && github.repository == 'cvnertnc/Begonia-Kernel-Builder'
     needs:
       - Set-repos
 
@@ -83,13 +82,12 @@ jobs:
           sudo apt-get install -y build-essential bc git curl wget zip unzip ccache flex bison libssl-dev libelf-dev
 
       # =========================
-      # FIXED TOOLCHAIN (IMPORTANT)
+      # TOOLCHAIN FIXED
       # =========================
       - name: "💫 Get toolchains"
         run: |
           mkdir -p toolchains
 
-          # 🔥 FIXED CLANG (NO MORE PROTON-CLANG CRASH)
           git clone --depth=1 https://github.com/ZyCromerZ/Clang.git toolchains/clang
 
           echo "$GITHUB_WORKSPACE/toolchains/clang/bin" >> $GITHUB_PATH

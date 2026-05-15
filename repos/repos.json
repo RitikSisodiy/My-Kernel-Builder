@@ -11,10 +11,10 @@
 
     "kernelSource": {
       "name": "kernel_source",
-      "repo": "YOUR_KERNEL_REPO_LINK",
-      "branch": "main",
-      "device": "your_device",
-      "defconfig": "your_defconfig"
+      "repo": "https://github.com/WuXing90/begonia_kernel_dev.git",
+      "branch": "KSU",
+      "device": "begonia",
+      "defconfig": "begonia_user_defconfig"
     },
 
     "AnyKernel3": {

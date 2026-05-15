@@ -1,0 +1,48 @@
+[
+  {
+    "kernelName": "MyKernel",
+
+    "withRoot": "none",
+    "withSUSFS": "false",
+    "whichSUSFS": "",
+    "withKPM": "false",
+
+    "ccache": "true",
+
+    "kernelSource": {
+      "name": "kernel_source",
+      "repo": "YOUR_KERNEL_REPO_LINK",
+      "branch": "main",
+      "device": "your_device",
+      "defconfig": "your_defconfig"
+    },
+
+    "AnyKernel3": {
+      "use": "true",
+      "release": "false",
+      "repo": "https://github.com/osm0sis/AnyKernel3.git",
+      "branch": "master"
+    },
+
+    "toolchains": [
+      {
+        "name": "clang",
+        "repo": "https://github.com/kdrag0n/proton-clang.git",
+        "branch": "master",
+        "binPath": [
+          "bin"
+        ]
+      }
+    ],
+
+    "params": {
+      "ARCH": "arm64",
+      "CC": "clang",
+
+      "externalCommand": {
+        "CROSS_COMPILE": "aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "arm-linux-gnueabi-"
+      }
+    }
+  }
+]

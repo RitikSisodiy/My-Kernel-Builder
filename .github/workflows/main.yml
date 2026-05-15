@@ -15,7 +15,7 @@ on:
 
 jobs:
   Set-repos:
-    name: "Parse repos.json"
+    name: "🐂 Parse repos.json"
     runs-on: ubuntu-latest
 
     outputs:
@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Generate Matrix
         id: generate-matrix
@@ -39,7 +39,7 @@ jobs:
 
 
   Build-Kernel:
-    name: "Build kernel"
+    name: "🐎 Build kernel"
     runs-on: ubuntu-latest
     needs: Set-repos
 
@@ -78,32 +78,21 @@ jobs:
 
       - name: Install prerequisites
         run: |
-          sudo apt update
-          sudo apt install -y build-essential bc bison flex libssl-dev libelf-dev git curl wget zip unzip ccache
+          sudo apt-get update
+          sudo apt-get install -y build-essential bc git curl wget zip unzip ccache
 
-      - name: Clear old runs (optional)
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # ----------------------------
+      # Clone kernel
+      # ----------------------------
+      - name: Clone kernel source
         run: |
-          gh run list -L400 --json databaseId -q '.[].databaseId' | tail -n+5 | xargs -I{} gh api repos/$GITHUB_REPOSITORY/actions/runs/{} -X DELETE || true
+          git clone --recursive --depth=50 --branch $KERNEL_BRANCH $KERNEL_REPO $KERNEL_NAME
+          cd $KERNEL_NAME
+          ls arch/arm64/configs/
 
-      - name: Setup ccache key
-        if: ${{ env.ccache == 'true' }}
-        id: ccache_key
-        run: |
-          echo "CACHE_KEY=$(echo -n '${{ toJSON(matrix.repos) }}' | base64 -w 0 | cut -c -48)" >> $GITHUB_OUTPUT
-
-      - name: Cache ccache
-        if: ${{ env.ccache == 'true' }}
-        uses: actions/cache@v4
-        with:
-          path: ~/.ccache
-          key: ccache-${{ env.KERNEL_NAME }}-${{ steps.ccache_key.outputs.CACHE_KEY }}-${{ env.builddate }}
-
-      - name: Clone kernel
-        run: |
-          git clone --depth=1 --branch $KERNEL_BRANCH $KERNEL_REPO $KERNEL_NAME
-
+      # ----------------------------
+      # Toolchains
+      # ----------------------------
       - name: Get toolchains
         run: |
           mkdir -p toolchains
@@ -117,25 +106,40 @@ jobs:
             echo "$GITHUB_WORKSPACE/toolchains/$name/bin" >> $GITHUB_PATH
           done
 
+      # ----------------------------
+      # Defconfig
+      # ----------------------------
       - name: Build defconfig
+        working-directory: ${{ env.KERNEL_NAME }}
         run: |
+          mkdir -p out
+          echo "Defconfig: $DEFCONFIG_NAME"
           make O=out ARCH=arm64 $DEFCONFIG_NAME
 
+      # ----------------------------
+      # Build kernel
+      # ----------------------------
       - name: Build kernel
+        working-directory: ${{ env.KERNEL_NAME }}
         run: |
           make -j$(nproc) O=out ARCH=arm64
 
-      - name: Pack AnyKernel3
+      # ----------------------------
+      # AnyKernel
+      # ----------------------------
+      - name: Package kernel
         if: ${{ env.useAnykernel == 'true' }}
         run: |
           git clone https://github.com/osm0sis/AnyKernel3.git
+
           cp out/arch/arm64/boot/Image.gz AnyKernel3/ || true
 
-          zip -r kernel.zip AnyKernel3/*
+          cd AnyKernel3
+          zip -r kernel.zip *
 
       - name: Upload artifact
         if: ${{ env.useAnykernel == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: kernel-${{ env.builddate }}
-          path: kernel.zip
+          path: AnyKernel3/kernel.zip

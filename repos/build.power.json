@@ -11,33 +11,47 @@
     "withRoot": "none",
     "withSUSFS": false,
     "withKPM": false,
+
     "toolchains": [
       {
-        "repo": "https://github.com/Neutron-Toolchains/clang",
-        "branch": "master",
-        "name": "NeutronClang",
-        "binPath": ["bin"]
+        "repo": "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86",
+        "branch": "main",
+        "name": "clang-r547379",
+        "binPath": [
+          "./clang-r547379/bin"
+        ]
       }
     ],
+
     "ccache": true,
+
     "params": {
       "ARCH": "arm64",
-      "CC": "NeutronClang/bin/clang",
+      "CC": "clang-r547379/bin/clang",
+
       "externalCommand": {
-        "CROSS_COMPILE": "NeutronClang/bin/aarch64-linux-gnu-",
-        "CROSS_COMPILE_ARM32": "NeutronClang/bin/arm-linux-gnueabi-",
-        "LD": "NeutronClang/bin/ld.lld",
+        "CROSS_COMPILE": "clang-r547379/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "clang-r547379/bin/arm-linux-gnueabi-",
+
+        "LD": "clang-r547379/bin/ld.lld",
+
         "LLVM": "1",
         "LLVM_IAS": "1",
-        "AR": "NeutronClang/bin/llvm-ar",
-        "NM": "NeutronClang/bin/llvm-nm",
-        "OBJCOPY": "NeutronClang/bin/llvm-objcopy",
-        "OBJDUMP": "NeutronClang/bin/llvm-objdump",
-        "READELF": "NeutronClang/bin/llvm-readelf",
-        "OBJSIZE": "NeutronClang/bin/llvm-size",
-        "STRIP": "NeutronClang/bin/llvm-strip"
+        "KCFLAGS": "-Wno-error",
+
+        "AR": "clang-r547379/bin/llvm-ar",
+        "NM": "clang-r547379/bin/llvm-nm",
+        "OBJCOPY": "clang-r547379/bin/llvm-objcopy",
+        "OBJDUMP": "clang-r547379/bin/llvm-objdump",
+        "READELF": "clang-r547379/bin/llvm-readelf",
+        "OBJSIZE": "clang-r547379/bin/llvm-size",
+        "STRIP": "clang-r547379/bin/llvm-strip",
+
+        "LLVM_AR": "clang-r547379/bin/llvm-ar",
+        "LLVM_DIS": "clang-r547379/bin/llvm-dis"
       }
     },
+
     "AnyKernel3": {
       "use": true,
       "release": true,

@@ -4,9 +4,9 @@
     "kernelSource": {
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
-      "name": "begonia_kernel_dev",
-      "repo": "https://github.com/WuXing90/begonia_kernel_dev.git",
-      "branch": "bka"
+      "name": "hydra_kernel_source",
+      "repo": "https://github.com/kdrag0nx/hydra_kernel_source.git",
+      "branch": "android-12.1/12(API-31/32)"
     },
     "withRoot": "none",
     "withSUSFS": false,

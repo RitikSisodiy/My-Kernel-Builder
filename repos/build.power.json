@@ -35,6 +35,8 @@
         "AR": "DragonTC/bin/llvm-ar",
         "NM": "DragonTC/bin/llvm-nm",
         "CONFIG_MTK_VCU": "n",
+        "KCFLAGS": "-Wno-error",
+        "EXTRA_CFLAGS": "-fno-lto",
         "OBJCOPY": "DragonTC/bin/llvm-objcopy",
         "OBJDUMP": "DragonTC/bin/llvm-objdump",
         "READELF": "DragonTC/bin/llvm-readelf",

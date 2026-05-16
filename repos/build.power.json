@@ -5,8 +5,8 @@
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
       "name": "begonia",
-      "repo": "https://github.com/TeraaBytee/begonia.git",
-      "branch": "main-r-oss"
+      "repo": "https://github.com/Hydra-Kernels/Hydra_Begonia.git",
+      "branch": "13.x"
     },
     "withRoot": "none",
     "withSUSFS": false,
@@ -34,9 +34,6 @@
         "KCFLAGS": "-Wno-error",
         "AR": "DragonTC/bin/llvm-ar",
         "NM": "DragonTC/bin/llvm-nm",
-        "CONFIG_MTK_VCU": "n",
-        "KCFLAGS": "-Wno-error",
-        "EXTRA_CFLAGS": "-fno-lto",
         "OBJCOPY": "DragonTC/bin/llvm-objcopy",
         "OBJDUMP": "DragonTC/bin/llvm-objdump",
         "READELF": "DragonTC/bin/llvm-readelf",

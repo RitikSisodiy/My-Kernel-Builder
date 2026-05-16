@@ -228,6 +228,7 @@ jobs:
 
             
       - name: "🐳 Enable Docker kernel configs"
+        working-directory: ${{ env.KERNEL_NAME }}
         run: |
           DEFCONFIG_PATH="arch/arm64/configs/${{ env.DEFCONFIG_NAME }}"
 

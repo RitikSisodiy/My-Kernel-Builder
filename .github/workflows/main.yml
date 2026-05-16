@@ -226,53 +226,7 @@ jobs:
 
           git clone --recursive -j $(nproc) --branch $BKB_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia-old BKB
 
-      - name: "💉 APatch, SukiSU setup and [BACKPORT]: ptrace"
-        id: apatch-sukisu-setup
-        working-directory: ${{ env.KERNEL_NAME }}
-        env:
-          arch: ${{ steps.generate-args.outputs.ARCH }}
-          DEFCONFIG_NAME: ${{ env.DEFCONFIG_NAME }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_OUTPUT: ${{ github.output_path }}
-        run: |
-          BKB_YML=releases
-          chmod +x BKB/kernel_patches/bkb/$BKB_YML/apatch_sukisu_setup.sh
-          ./BKB/kernel_patches/bkb/$BKB_YML/apatch_sukisu_setup.sh
-
-      - name: "😋 Integrate KernelSU or KernelSU-Next"
-        id: integrate-kernelsu-next
-        working-directory: ${{ env.KERNEL_NAME }}
-        if: ${{ env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun' }}
-        env:
-          arch: ${{ steps.generate-args.outputs.ARCH }}
-          DEFCONFIG_NAME: ${{ env.DEFCONFIG_NAME }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_OUTPUT: ${{ github.output_path }}
-          withRoot: ${{ env.withRoot }}
-          withKPM: ${{ env.withKPM }}
-          KNAME: ${{ env.KNAME }}
-        run: |
-          BKB_YML=releases
-          chmod +x BKB/kernel_patches/bkb/$BKB_YML/integrate_kernelsu.sh
-          ./BKB/kernel_patches/bkb/$BKB_YML/integrate_kernelsu.sh
-
-      - name: "🥷 Add SUSFS patches"
-        id: add-susfs-patches
-        working-directory: ${{ env.KERNEL_NAME }}
-        if: ${{ (env.withRoot == 'ksu' || env.withRoot == 'sukisu' || env.withRoot == 'ksun') && env.withSUSFS == 'true' }}
-        env:
-          arch: ${{ steps.generate-args.outputs.ARCH }}
-          DEFCONFIG_NAME: ${{ env.DEFCONFIG_NAME }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_OUTPUT: ${{ github.output_path }}
-          withRoot: ${{ env.withRoot }}
-          withSUSFS: ${{ env.withSUSFS }}
-          whichSUSFS: ${{ matrix.repos.whichSUSFS }}
-          KNAME: ${{ env.KNAME }}
-        run: |
-          BKB_YML=releases
-          chmod +x BKB/kernel_patches/bkb/$BKB_YML/add_susfs_patches.sh
-          ./BKB/kernel_patches/bkb/$BKB_YML/add_susfs_patches.sh
+      
 
       - name: "👍 Make defconfig"
         working-directory: ${{ env.KERNEL_NAME }}

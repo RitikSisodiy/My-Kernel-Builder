@@ -286,6 +286,39 @@ jobs:
         run: |
           echo "PATH Variable: $PATH"
           make ${{ env.args }} ${{ env.DEFCONFIG_NAME }}
+      - name: "✅ Verify Docker kernel options"
+        working-directory: ${{ env.OUT_DIR }}
+        run: |
+          REQUIRED_OPTIONS=(
+            CONFIG_USER_NS
+            CONFIG_POSIX_MQUEUE
+            CONFIG_CGROUP_DEVICE
+            CONFIG_CGROUP_PIDS
+            CONFIG_CGROUP_PERF
+            CONFIG_CFS_BANDWIDTH
+            CONFIG_NET_CLS_CGROUP
+            CONFIG_CGROUP_NET_PRIO
+            CONFIG_VETH
+            CONFIG_VXLAN
+            CONFIG_MACVLAN
+            CONFIG_BRIDGE_VLAN_FILTERING
+            CONFIG_NETFILTER_XT_MATCH_ADDRTYPE
+            CONFIG_IP6_NF_NAT
+            CONFIG_NF_TABLES
+            CONFIG_IP_VS
+            CONFIG_BTRFS_FS
+            CONFIG_MEMCG_SWAP
+            CONFIG_MEMCG_SWAP_ENABLED
+          )
+
+          for option in "${REQUIRED_OPTIONS[@]}"; do
+            if ! grep -q "^$option=y" .config; then
+              echo "❌ $option is missing or not enabled!"
+              exit 1
+            else
+              echo "✅ $option is enabled"
+            fi
+          done
 
       - name: "🎶 Build kernel"
         working-directory: ${{ env.KERNEL_NAME }}

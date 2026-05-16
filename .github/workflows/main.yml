@@ -227,7 +227,13 @@ jobs:
           git clone --recursive -j $(nproc) --branch $BKB_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia-old BKB
 
       
+      - name: "🐳 Append Docker configs"
+        run: |
+          DEFCONFIG_PATH="arch/arm64/configs/${{ env.DEFCONFIG_NAME }}"
 
+          cat missing.txt >> "$DEFCONFIG_PATH"
+
+          echo "Configs from missing.txt appended to $DEFCONFIG_PATH"
       - name: "👍 Make defconfig"
         working-directory: ${{ env.KERNEL_NAME }}
         env:

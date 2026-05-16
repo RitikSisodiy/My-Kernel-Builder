@@ -13,12 +13,10 @@
     "withKPM": false,
     "toolchains": [
       {
-        "repo": "https://github.com/Neutron-Toolchains/clang-build",
-        "branch": "main",
+        "repo": "https://github.com/Neutron-Toolchains/clang",
+        "branch": "master",
         "name": "NeutronClang",
-        "binPath": [
-          "./bin"
-        ]
+        "binPath": ["bin"]
       }
     ],
     "ccache": true,
@@ -31,16 +29,13 @@
         "LD": "NeutronClang/bin/ld.lld",
         "LLVM": "1",
         "LLVM_IAS": "1",
-        "KCFLAGS": "-Wno-error",
         "AR": "NeutronClang/bin/llvm-ar",
         "NM": "NeutronClang/bin/llvm-nm",
         "OBJCOPY": "NeutronClang/bin/llvm-objcopy",
         "OBJDUMP": "NeutronClang/bin/llvm-objdump",
         "READELF": "NeutronClang/bin/llvm-readelf",
         "OBJSIZE": "NeutronClang/bin/llvm-size",
-        "STRIP": "NeutronClang/bin/llvm-strip",
-        "LLVM_AR": "NeutronClang/bin/llvm-ar",
-        "LLVM_DIS": "NeutronClang/bin/llvm-dis"
+        "STRIP": "NeutronClang/bin/llvm-strip"
       }
     },
     "AnyKernel3": {

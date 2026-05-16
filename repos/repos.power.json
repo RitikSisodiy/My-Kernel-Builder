@@ -10,7 +10,7 @@
     },
     "withRoot": "none",
     "withSUSFS": false,
-    "withKPM": false
+    "withKPM": false,
     "withKPM": false,
     "toolchains": [
       {

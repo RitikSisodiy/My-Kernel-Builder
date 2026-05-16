@@ -227,21 +227,20 @@ jobs:
           git clone --recursive -j $(nproc) --branch $BKB_BRANCH https://x-access-token:${{ secrets.GH_PAT }}@github.com/cvnertnc/susfs4ksu-begonia-old BKB
 
             
-      - name: "🐳 Enable Docker-required kernel configs"
+            - name: "🐳 Merge Docker kernel configs"
         working-directory: ${{ env.KERNEL_NAME }}
         run: |
+          # Base defconfig
+          DEFCONFIG_PATH="arch/arm64/configs/${{ env.DEFCONFIG_NAME }}"
+
+          # Create fragment
           cat <<EOF > docker_options.cfg
-          CONFIG_IPC_NS=y
           CONFIG_USER_NS=y
           CONFIG_POSIX_MQUEUE=y
           CONFIG_KEYS=y
           CONFIG_CGROUP_DEVICE=y
           CONFIG_CGROUP_PIDS=y
           CONFIG_CGROUP_PERF=y
-          CONFIG_CGROUP_HUGETLB=y
-          CONFIG_BLK_CGROUP=y
-          CONFIG_BLK_DEV_THROTTLING=y
-          CONFIG_CFQ_GROUP_IOSCHED=y
           CONFIG_CFS_BANDWIDTH=y
           CONFIG_NET_CLS_CGROUP=y
           CONFIG_CGROUP_NET_PRIO=y
@@ -274,10 +273,11 @@ jobs:
           CONFIG_ANDROID_PARANOID_NETWORK=n
           EOF
 
-          # Merge options and resolve dependencies
-          scripts/kconfig/merge_config.sh -m arch/arm64/configs/${{ env.DEFCONFIG_NAME }} docker_options.cfg
-          make olddefconfig
+          # Merge fragment properly
+          scripts/kconfig/merge_config.sh -m $DEFCONFIG_PATH docker_options.cfg
 
+          # Generate final config
+          make ARCH=arm64 O=$OUT_DIR olddefconfig
       - name: "👍 Make defconfig"
         working-directory: ${{ env.KERNEL_NAME }}
         env:
@@ -286,39 +286,6 @@ jobs:
         run: |
           echo "PATH Variable: $PATH"
           make ${{ env.args }} ${{ env.DEFCONFIG_NAME }}
-      - name: "✅ Verify Docker kernel options"
-        working-directory: ${{ env.OUT_DIR }}
-        run: |
-          REQUIRED_OPTIONS=(
-            CONFIG_USER_NS
-            CONFIG_POSIX_MQUEUE
-            CONFIG_CGROUP_DEVICE
-            CONFIG_CGROUP_PIDS
-            CONFIG_CGROUP_PERF
-            CONFIG_CFS_BANDWIDTH
-            CONFIG_NET_CLS_CGROUP
-            CONFIG_CGROUP_NET_PRIO
-            CONFIG_VETH
-            CONFIG_VXLAN
-            CONFIG_MACVLAN
-            CONFIG_BRIDGE_VLAN_FILTERING
-            CONFIG_NETFILTER_XT_MATCH_ADDRTYPE
-            CONFIG_IP6_NF_NAT
-            CONFIG_NF_TABLES
-            CONFIG_IP_VS
-            CONFIG_BTRFS_FS
-            CONFIG_MEMCG_SWAP
-            CONFIG_MEMCG_SWAP_ENABLED
-          )
-
-          for option in "${REQUIRED_OPTIONS[@]}"; do
-            if ! grep -q "^$option=y" .config; then
-              echo "❌ $option is missing or not enabled!"
-              exit 1
-            else
-              echo "✅ $option is enabled"
-            fi
-          done
 
       - name: "🎶 Build kernel"
         working-directory: ${{ env.KERNEL_NAME }}

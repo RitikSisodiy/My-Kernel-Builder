@@ -5,7 +5,7 @@
       "device": "begonia",
       "defconfig": "begonia_user_defconfig",
       "name": "begonia_kernel_dev",
-      "repo": "https://github.com/WuXing90/begonia_kernel_dev.git",
+      "repo": "https://github.com/RitikSisodiy/note8prokernel.git",
       "branch": "bka"
     },
     "withRoot": "none",

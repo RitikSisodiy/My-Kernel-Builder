@@ -16,7 +16,7 @@ on:
 jobs:
   Set-repos:
     name: "🐂 Parse build.json"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       repos: ${{ steps.generate-matrix.outputs.repos }}
       builddate: ${{ steps.generate-builddate.outputs.builddate }}
@@ -36,7 +36,7 @@ jobs:
 
   Build-Kernel:
     name: "🐎 Build kernel"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs:
       - Set-repos
     strategy:

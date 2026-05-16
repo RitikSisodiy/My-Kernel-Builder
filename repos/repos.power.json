@@ -8,9 +8,9 @@
       "repo": "https://github.com/WuXing90/begonia_kernel_dev.git",
       "branch": "bka"
     },
-    "withRoot": "ksun",
-    "withSUSFS": true,
-    "whichSUSFS": "susfs-159",
+    "withRoot": "none",
+    "withSUSFS": false,
+    "withKPM": false
     "withKPM": false,
     "toolchains": [
       {

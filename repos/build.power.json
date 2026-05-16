@@ -13,9 +13,9 @@
     "withKPM": false,
     "toolchains": [
       {
-        "repo": "https://github.com/NusantaraDevs/DragonTC",
-        "branch": "10.0",
-        "name": "DragonTC",
+        "repo": "https://github.com/Neutron-Toolchains/clang-build",
+        "branch": "main",
+        "name": "NeutronClang",
         "binPath": [
           "./bin"
         ]
@@ -24,23 +24,23 @@
     "ccache": true,
     "params": {
       "ARCH": "arm64",
-      "CC": "DragonTC/bin/clang",
+      "CC": "NeutronClang/bin/clang",
       "externalCommand": {
-        "CROSS_COMPILE": "DragonTC/bin/aarch64-linux-gnu-",
-        "CROSS_COMPILE_ARM32": "DragonTC/bin/arm-linux-gnueabi-",
-        "LD": "DragonTC/bin/ld.lld",
+        "CROSS_COMPILE": "NeutronClang/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "NeutronClang/bin/arm-linux-gnueabi-",
+        "LD": "NeutronClang/bin/ld.lld",
         "LLVM": "1",
         "LLVM_IAS": "1",
         "KCFLAGS": "-Wno-error",
-        "AR": "DragonTC/bin/llvm-ar",
-        "NM": "DragonTC/bin/llvm-nm",
-        "OBJCOPY": "DragonTC/bin/llvm-objcopy",
-        "OBJDUMP": "DragonTC/bin/llvm-objdump",
-        "READELF": "DragonTC/bin/llvm-readelf",
-        "OBJSIZE": "DragonTC/bin/llvm-size",
-        "STRIP": "DragonTC/bin/llvm-strip",
-        "LLVM_AR": "DragonTC/bin/llvm-ar",
-        "LLVM_DIS": "DragonTC/bin/llvm-dis"
+        "AR": "NeutronClang/bin/llvm-ar",
+        "NM": "NeutronClang/bin/llvm-nm",
+        "OBJCOPY": "NeutronClang/bin/llvm-objcopy",
+        "OBJDUMP": "NeutronClang/bin/llvm-objdump",
+        "READELF": "NeutronClang/bin/llvm-readelf",
+        "OBJSIZE": "NeutronClang/bin/llvm-size",
+        "STRIP": "NeutronClang/bin/llvm-strip",
+        "LLVM_AR": "NeutronClang/bin/llvm-ar",
+        "LLVM_DIS": "NeutronClang/bin/llvm-dis"
       }
     },
     "AnyKernel3": {

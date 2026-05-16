@@ -229,7 +229,7 @@ jobs:
       
       - name: "🐳 Append Docker configs"
         run: |
-          DEFCONFIG_PATH="arch/arm64/configs/${{ env.DEFCONFIG_NAME }}"
+          DEFCONFIG_PATH="${{ env.KERNEL_NAME }}/arch/arm64/configs/${{ env.DEFCONFIG_NAME }}"
 
           cat missing.txt >> "$DEFCONFIG_PATH"
 

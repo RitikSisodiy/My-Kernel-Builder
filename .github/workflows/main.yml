@@ -36,9 +36,7 @@ jobs:
       # =========================
       - name: "🌟 Clone Kernel Source"
         run: |
-          git clone --depth=1 https://github.com/WuXing90/begonia_kernel_dev.git kernel_source
-          cd kernel_source
-          git checkout KSU
+          git clone --recursive --depth=1 --branch master https://github.com/WuXing90/begonia_kernel_dev.git kernel_source
 
       # =========================
       # DEFCONFIG

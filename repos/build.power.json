@@ -1,0 +1,53 @@
+[
+  {
+    "kernelName": "power",
+    "kernelSource": {
+      "device": "begonia",
+      "defconfig": "begonia_user_defconfig",
+      "name": "begonia",
+      "repo": "https://github.com/TeraaBytee/begonia.git",
+      "branch": "main-r-oss"
+    },
+    "withRoot": "none",
+    "withSUSFS": false,
+    "withKPM": false,
+    "toolchains": [
+      {
+        "repo": "https://github.com/NusantaraDevs/DragonTC",
+        "branch": "master",
+        "name": "DragonTC",
+        "binPath": [
+          "./bin"
+        ]
+      }
+    ],
+    "ccache": true,
+    "params": {
+      "ARCH": "arm64",
+      "CC": "DragonTC/bin/clang",
+      "externalCommand": {
+        "CROSS_COMPILE": "DragonTC/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "DragonTC/bin/arm-linux-gnueabi-",
+        "LD": "DragonTC/bin/ld.lld",
+        "LLVM": "1",
+        "LLVM_IAS": "1",
+        "KCFLAGS": "-Wno-error",
+        "AR": "DragonTC/bin/llvm-ar",
+        "NM": "DragonTC/bin/llvm-nm",
+        "OBJCOPY": "DragonTC/bin/llvm-objcopy",
+        "OBJDUMP": "DragonTC/bin/llvm-objdump",
+        "READELF": "DragonTC/bin/llvm-readelf",
+        "OBJSIZE": "DragonTC/bin/llvm-size",
+        "STRIP": "DragonTC/bin/llvm-strip",
+        "LLVM_AR": "DragonTC/bin/llvm-ar",
+        "LLVM_DIS": "DragonTC/bin/llvm-dis"
+      }
+    },
+    "AnyKernel3": {
+      "use": true,
+      "release": true,
+      "repo": "https://github.com/cvnertnc/AnyKernel3/",
+      "branch": "begonia"
+    }
+  }
+]

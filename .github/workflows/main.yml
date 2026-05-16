@@ -17,7 +17,6 @@ jobs:
   Set-repos:
     name: "🐂 Parse repos.json"
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'cvnertnc' && github.repository == 'cvnertnc/Begonia-Kernel-Builder'
     outputs:
       repos: ${{ steps.generate-matrix.outputs.repos }}
       builddate: ${{ steps.generate-builddate.outputs.builddate }}

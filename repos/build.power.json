@@ -14,7 +14,7 @@
     "toolchains": [
       {
         "repo": "https://github.com/NusantaraDevs/DragonTC",
-        "branch": "master",
+        "branch": "10.0",
         "name": "DragonTC",
         "binPath": [
           "./bin"
